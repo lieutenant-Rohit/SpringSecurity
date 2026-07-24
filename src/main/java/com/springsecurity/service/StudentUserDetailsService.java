@@ -1,8 +1,8 @@
 package com.springsecurity.service;
 
-import com.springsecurity.model.UserPrincipal;
-import com.springsecurity.model.Users;
-import com.springsecurity.repo.UserRepo;
+import com.springsecurity.model.Student;
+import com.springsecurity.model.StudentPrincipal;
+import com.springsecurity.repo.StudentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,18 +10,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyUserDetailService implements UserDetailsService {
+public class StudentUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserRepo userRepo;
+    private StudentRepo studentRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users user = userRepo.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
+        Student student = studentRepo.findByName(username);
+        if (student == null) {
+            throw new UsernameNotFoundException("Student not found");
         }
-        return new UserPrincipal(user);
+        return new StudentPrincipal(student);
     }
 
 }

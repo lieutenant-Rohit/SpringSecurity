@@ -7,27 +7,27 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-public class UserPrincipal implements UserDetails {
+public class StudentPrincipal implements UserDetails {
 
-    private Users user;
+    private Student student;
 
-    public UserPrincipal(Users user) {
-        this.user = user;
+    public StudentPrincipal(Student student) {
+        this.student = student;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+        return Collections.singleton(new SimpleGrantedAuthority("STUDENT"));
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return student.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return student.getName();
     }
 
     @Override
@@ -41,4 +41,5 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() { return true; }
+
 }
