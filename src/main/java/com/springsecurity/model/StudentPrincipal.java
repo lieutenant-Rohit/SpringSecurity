@@ -17,7 +17,11 @@ public class StudentPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("STUDENT"));
+        String role = student.getRole();
+        if (role == null || role.isBlank()) {
+            role = "STUDENT";
+        }
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role));
     }
 
     @Override
