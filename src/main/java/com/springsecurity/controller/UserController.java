@@ -1,6 +1,7 @@
 package com.springsecurity.controller;
 
-import com.springsecurity.model.Student;
+import com.springsecurity.model.User;
+import com.springsecurity.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,32 +13,32 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class StudentController {
+public class UserController {
 
     @Autowired
-    private com.springsecurity.repo.StudentRepo studentRepo;
+    private UserRepo userRepo;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostMapping("/student")
-    public Student register(@RequestBody Student student) {
-        student.setPassword(passwordEncoder.encode(student.getPassword()));
-        if (student.getRole() == null || student.getRole().isBlank()) {
-            student.setRole("STUDENT");
+    @PostMapping("/user")
+    public User register(@RequestBody User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (user.getRole() == null || user.getRole().isBlank()) {
+            user.setRole("STUDENT");
         }
-        return studentRepo.save(student);
+        return userRepo.save(user);
     }
 
-    @GetMapping("/admin/students")
-    public List<Student> getAllStudents() {
-        return studentRepo.findAll();
+    @GetMapping("/teacher/users")
+    public List<User> getAllUsers() {
+        return userRepo.findAll();
     }
 
     @GetMapping("/my-courses")
     public List<String> getMyCourses(Authentication authentication) {
-        Student student = studentRepo.findByName(authentication.getName());
-        return student.getCourses();
+        User user = userRepo.findByName(authentication.getName());
+        return user.getCourses();
     }
 
 }

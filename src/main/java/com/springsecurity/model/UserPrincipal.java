@@ -7,17 +7,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-public class StudentPrincipal implements UserDetails {
+public class UserPrincipal implements UserDetails {
 
-    private Student student;
+    private User user;
 
-    public StudentPrincipal(Student student) {
-        this.student = student;
+    public UserPrincipal(User user) {
+        this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String role = student.getRole();
+        String role = user.getRole();
         if (role == null || role.isBlank()) {
             role = "STUDENT";
         }
@@ -26,12 +26,12 @@ public class StudentPrincipal implements UserDetails {
 
     @Override
     public String getPassword() {
-        return student.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return student.getName();
+        return user.getName();
     }
 
     @Override
